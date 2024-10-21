@@ -1,25 +1,38 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { RegistrarUsuarioViewModel } from '../../models/auth.models';
+import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../../services/auth.service';
+import { Router, RouterLink } from '@angular/router';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
   imports: [
     NgIf,
+    RouterLink,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatInputModule,
     MatButtonModule,
-    MatIconModule],
+    MatIconModule
+  ],
   templateUrl: './registro.component.html',
 })
 export class RegistroComponent {
   form: FormGroup;
 
-    constructor(private formBuilder: FormBuilder){
+    constructor(
+      private router: Router,
+      private formBuilder: FormBuilder,
+      private authService: AuthService,
+      private usuarioService: UsuarioService,
+    ){
     this.form = this.formBuilder.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
       login: ['', [Validators.required, Validators.minLength(3)]],
@@ -46,6 +59,11 @@ export class RegistroComponent {
   public registrar(){
     if(this.form.invalid) return;
 
-      console.log("Registrar Chamado");
+    const registro: RegistrarUsuarioViewModel = this.form.value;
+
+    this.authService.registrar(registro).subscribe((res) => {
+      this.usuarioService.logarUsuario(res.usuario);
+      this.router.navigate(['/dashboard']);
+    });
   }
 }
