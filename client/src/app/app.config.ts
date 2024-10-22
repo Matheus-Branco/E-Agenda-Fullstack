@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideAutentication } from './core/auth/auth.provider';
 import { provideHttpClient } from '@angular/common/http';
+import { provideNotifications } from './core/notificacao/notificacao.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,5 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(),
     provideAutentication(),
+    provideNotifications(),
   ],
 };

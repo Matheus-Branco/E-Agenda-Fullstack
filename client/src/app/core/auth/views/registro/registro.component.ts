@@ -63,6 +63,7 @@ export class RegistroComponent {
 
     this.authService.registrar(registro).subscribe((res) => {
       this.usuarioService.logarUsuario(res.usuario);
+
       this.router.navigate(['/dashboard']);
     });
   }

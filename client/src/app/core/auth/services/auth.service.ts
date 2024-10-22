@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "../../../../environments/environment.development";
 import { map, Observable, pipe, tap, throwError } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { RegistrarUsuarioViewModel, TokenViewModel } from "../models/auth.models";
+import { AutenticarUsuarioViewModel, RegistrarUsuarioViewModel, TokenViewModel } from "../models/auth.models";
 
 @Injectable()
 export class AuthService{
@@ -18,6 +18,24 @@ export class AuthService{
     return this.http
     .post<TokenViewModel>(urlCompleto, registro)
     .pipe(map(this.processarDados));
+  }
+
+  public login(loginUsuario: AutenticarUsuarioViewModel) {
+    const urlCompleto = `${this.apiUrl}/contas/autenticar`;
+
+    return this.http
+      .post<TokenViewModel>(urlCompleto, loginUsuario)
+      .pipe(map(this.processarDados));
+  }
+
+  public logout() {
+    const urlCompleto = `${this.apiUrl}/contas/sair`;
+
+    return this.http.post(urlCompleto, {});
+  }
+
+  public validarExpiracaoToken(dataExpiracaoToken: Date): boolean {
+    return dataExpiracaoToken > new Date(); // obtém a data de agora
   }
 
   private processarDados(resposta: any): TokenViewModel{
