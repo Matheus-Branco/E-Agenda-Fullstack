@@ -125,11 +125,46 @@
             ],
             "scripts": []
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "e-agenda:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "e-agenda:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "e-agenda:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "e-agenda:serve:production"
+            }
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "68e7b047-52e4-4263-ba15-c9eb869a726e"
+    "analytics": "68e7b047-52e4-4263-ba15-c9eb869a726e",
+    "schematicCollections": [
+      "@cypress/schematic",
+      "@schematics/angular"
+    ]
   }
 }
