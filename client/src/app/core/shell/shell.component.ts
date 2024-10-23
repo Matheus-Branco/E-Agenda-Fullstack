@@ -11,6 +11,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { LinkNavegacao } from './models/link-navegacao.model';
 import { UsuarioTokenViewModel } from '../auth/models/auth.models';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-shell',
@@ -25,13 +26,14 @@ import { UsuarioTokenViewModel } from '../auth/models/auth.models';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    MatMenuModule,
     MatIconModule,
   ],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
 })
 export class ShellComponent {
-@Input() usuarioAutenticacao?: UsuarioTokenViewModel;
+@Input() usuarioAutenticado?: UsuarioTokenViewModel;
 @Output() logout: EventEmitter<void>;
 
   links: LinkNavegacao[] = [
@@ -67,7 +69,7 @@ export class ShellComponent {
       this.logout = new EventEmitter();
   }
 
-  logoutEfetuado(){
-this.logout.emit();
+  logoutAcionado(){
+    this.logout.emit();
   }
 }

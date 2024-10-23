@@ -9,7 +9,8 @@ import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { UsuarioService } from "../../services/usuario.service";
 import { LocalStorageService } from "../../services/local-storage.service";
-import { AutenticarUsuarioViewModel } from "../../models/auth.models";
+import { AutenticarUsuarioViewModel, TokenViewModel } from "../../models/auth.models";
+import { NotificacaoService } from "../../../notificacao/notificacao.service";
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,7 @@ form: FormGroup;
     private authService: AuthService,
     private usuarioService: UsuarioService,
     private localStorageService: LocalStorageService,
+    private notificacaoService: NotificacaoService,
   ){
     this.form = this.fb.group({
       login: [
@@ -68,12 +70,25 @@ form: FormGroup;
 
     const loginUsuario: AutenticarUsuarioViewModel = this.form.value;
 
-    this.authService.login(loginUsuario).subscribe((res) => {
-      this.usuarioService.logarUsuario(res.usuario);
-      this.localStorageService.salvarTokenAutenticacao(res);
+    const observer = {
+      next: (res: TokenViewModel) => this.processarSucesso(res),
+      error: (erro: Error) => this.processarFalha(erro)
+    };
 
-      this.router.navigate(['/dashboard']);
-    });
+    this.authService
+    .login(loginUsuario)
+    .subscribe(observer);
+  }
+  private processarSucesso(res: TokenViewModel){
+    this.usuarioService.logarUsuario(res.usuario);
+    this.localStorageService.salvarTokenAutenticacao(res);
+
+    this.router.navigate(['/dashboard']);
+  }
+
+  private processarFalha(err: any){
+    this.notificacaoService.erro(err.message);
+    console.log(err);
   }
 }
 
