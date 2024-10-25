@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from '../../../core/auth/services/local-storage.service';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { ContatoEditadoViewModel, ContatoExcluidoViewModel, ContatoInseridoViewModel, EditarContatoViewModel, InserirContatoViewModel, ListarContatoViewModel } from '../models/contato.models';
+import { ContatoEditadoViewModel, ContatoExcluidoViewModel, ContatoInseridoViewModel, EditarContatoViewModel, InserirContatoViewModel, ListarContatoViewModel, VisualizarContatoViewModel } from '../models/contato.models';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +49,14 @@ export class ContatoService {
       .pipe(map(this.processarDados), catchError(this.processarFalha));
     }
 
+    public selecionarPorId(id: string): Observable<VisualizarContatoViewModel> {
+      const urlCompleto = `${this.url}/visualizacao-completa/${id}`;
+
+      return this.http
+        .get<VisualizarContatoViewModel>(urlCompleto)
+        .pipe(map(this.processarDados), catchError(this.processarFalha));
+    }
+
     private processarDados(resposta: any){
       if(resposta.sucesso) return resposta.dados;
 
@@ -57,16 +65,5 @@ export class ContatoService {
 
     private processarFalha(resposta: any){
       return throwError(() => new Error(resposta.error.erros[0]));
-    }
-
-    private obterHeadersAutorizacao(){
-      const chave = this.localStorageService.obterTokenAutenticacao()?.chave
-
-      return {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${chave}`
-        }
-      };
     }
 }

@@ -43,7 +43,7 @@ export interface ListarContatoViewModel{
   cargo: string;
 }
 
-export interface VisualizarContaoViewModel{
+export interface VisualizarContatoViewModel{
   id: string;
   nome: string;
   email: string;
