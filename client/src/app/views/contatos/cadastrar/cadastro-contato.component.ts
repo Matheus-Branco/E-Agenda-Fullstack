@@ -101,21 +101,24 @@ export class CadastroContatoComponent {
     }
     const inserirContatoVm = this.form.value;
 
-    const oberserver: PartialObserver<ContatoInseridoViewModel> = {
-      next: (contatoInserio) => this.processarSucesso(contatoInserio),
+    this.contatoService.inserir(inserirContatoVm).subscribe({
+      next: (contatoInserido) => this.processarSucesso(contatoInserido),
       error: (erro) => this.processarFalha(erro),
-    };
-
-    this.contatoService.inserir(inserirContatoVm).subscribe(oberserver);
+    });
   };
-  private processarSucesso(contato: ContatoInseridoViewModel): void {
-    this.notificacaoService.sucesso(`Contato ${contato.nome} cadastrado com sucesso!`);
 
-    this.router.navigate(['/contatos', 'listar']);
+    private processarSucesso(contato: ContatoInseridoViewModel): void {
+      this.notificacaoService.sucesso(
+        `Contato "${contato.nome}" cadastrado com sucesso!`
+      );
+
+      this.router.navigate(['/contatos', 'listar']);
+    }
+
+    private processarFalha(erro: Error): any{
+      this.notificacaoService.erro(erro.message);
+    }
   }
 
-  private processarFalha(erro: Error): any{
-    this.notificacaoService.erro(erro.message);
-  }
-}
+
 

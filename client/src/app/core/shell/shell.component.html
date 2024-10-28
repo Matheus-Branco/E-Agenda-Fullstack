@@ -25,7 +25,12 @@
       </a>
 
       <mat-menu #menu class="auth-menu-opcoes">
-        <button mat-menu-item class="auth-menu-item" (click)="logoutAcionado()">
+        <button
+          mat-menu-item
+          data-cy="logout"
+          class="auth-menu-item"
+          (click)="logoutAcionado()"
+        >
           <mat-icon matListItemIcon>logout</mat-icon>
           Logout
         </button>
@@ -51,6 +56,7 @@
       <button
         *ngIf="isHandset$ | async"
         mat-icon-button
+        data-cy="ativarNavbar"
         aria-label="Ativar barra lateral"
         type="button"
         (click)="drawer.toggle()"

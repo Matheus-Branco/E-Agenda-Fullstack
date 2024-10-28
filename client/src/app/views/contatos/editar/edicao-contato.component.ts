@@ -8,7 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PartialObserver } from 'rxjs';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
-import { ContatoEditadoViewModel } from '../models/contato.models';
+import {
+  ContatoEditadoViewModel,
+  ContatoInseridoViewModel,
+} from '../models/contato.models';
 import { ContatoService } from '../services/contato.service';
 
 @Component({
