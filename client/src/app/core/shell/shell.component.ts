@@ -55,10 +55,20 @@ export class ShellComponent {
         rota: '/dashboard',
       },
       {
-        titulo: 'Contaots',
+        titulo: 'Contatos',
         icone: 'people',
         rota: '/contatos',
-      }
+      },
+      {
+        titulo: 'Compromissos',
+        icone: 'event',
+        rota: '/compromissos',
+      },
+      {
+        titulo: 'Categorias',
+        icone: 'bookmarks',
+        rota: '/categorias',
+      },
   ];
 
   isHandset$: Observable<boolean>;

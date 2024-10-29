@@ -6,6 +6,8 @@ import { inject } from '@angular/core';
 import { UsuarioService } from './core/auth/services/usuario.service';
 import { LoginComponent } from './core/auth/views/login/login.component';
 import { contatosRoutes } from './views/contatos/contatos.routes';
+import { compromissoRoutes } from './views/compromissos/compromissos.routes';
+import { categoriasRoutes } from './views/categorias/categorias.routes';
 
 const authGuard: CanMatchFn = (): Observable<boolean | UrlTree> => {
   const router = inject(Router);
@@ -42,5 +44,7 @@ export const routes: Routes = [
   { path: 'registro', component: RegistroComponent, canMatch: [authUserGuard] },
   { path: 'login', component: LoginComponent, canMatch: [authUserGuard] },
 
-  { path: 'contatos', children: contatosRoutes },
+  { path: 'contatos', children: contatosRoutes, canMatch: [authGuard] },
+  { path: 'compromissos', children: compromissoRoutes, canMatch: [authGuard] },
+  { path: 'categorias', children: categoriasRoutes , canMatch: [authGuard] },
 ];
