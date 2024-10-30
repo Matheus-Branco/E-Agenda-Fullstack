@@ -53,7 +53,7 @@ export interface CompromissoExcluidoViewModel{}
 
 export interface ListarCompromissoViewModel{
   id: string;
-  assutno: string;
+  assunto: string;
   data: Date;
   horaInicio: string;
   horaTermino: string;
