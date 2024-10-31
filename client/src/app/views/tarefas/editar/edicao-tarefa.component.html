@@ -1,0 +1,149 @@
+<main class="container my-5">
+  <div class="row justify-content-center g-3 mt-2">
+    <div class="col col-md-10 col-lg-6">
+      <h1 class="display-3">Edição de Tarefa</h1>
+
+      <hr />
+
+      <form [formGroup]="form" (submit)="gravar()">
+        <mat-form-field class="w-100 mt-5" appearance="fill">
+          <mat-label>Título</mat-label>
+          <input
+            matInput
+            data-cy="titulo"
+            formControlName="titulo"
+            autocomplete="off"
+            placeholder="Ex: Lavar o carro"
+          />
+          <mat-icon matSuffix color="primary">description</mat-icon>
+          <mat-error class="text-white" *ngIf="titulo?.invalid">
+            <span *ngIf="titulo?.errors?.['required']"
+              >O título preciso ser preenchido.</span
+            >
+            <span *ngIf="titulo?.errors?.['minlength']"
+              >O título deve conter ao menos 3 caracteres.</span
+            >
+            <span *ngIf="titulo?.errors?.['maxlength']"
+              >O título não pode exceder 30 caracteres.</span
+            >
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100 mt-3" appearance="fill">
+          <mat-label>Prioridade</mat-label>
+          <mat-select
+            data-cy="prioridade"
+            formControlName="prioridade"
+            placeholder="Selecione a prioridade"
+          >
+            <mat-option
+              *ngFor="let opcao of opcoesPrioridade; index as i"
+              [value]="i"
+            >
+              {{ opcao }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix color="primary">priority_high</mat-icon>
+
+          <mat-error class="text-white" *ngIf="prioridade?.invalid">
+            A prioridade precisa ser selecionada.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-divider class="my-4"></mat-divider>
+
+        <section>
+          <h3>Itens</h3>
+
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label>Título do Item</mat-label>
+            <input
+              matInput
+              #tituloItem
+              data-cy="tituloItem"
+              autocomplete="off"
+              placeholder="Ex: Lavar o carro"
+            />
+            <mat-icon matSuffix color="primary">notes</mat-icon>
+          </mat-form-field>
+
+          <button
+            mat-stroked-button
+            extended
+            (click)="adicionarItem(tituloItem.value); tituloItem.value = ''"
+            type="button"
+            class="d-flex ms-auto"
+          >
+            <mat-icon>add_circle</mat-icon>
+            Adicionar Item
+          </button>
+
+          <div class="row g-2 mt-4">
+            <mat-card
+              appearance="outlined"
+              *ngFor="let item of itensParaExibicao; index as i"
+            >
+              <mat-card-content class="d-flex align-items-center">
+                <p class="fs-5 m-0">{{ item.value.titulo }}</p>
+
+                <div class="d-flex gap-2 ms-auto">
+                  <button
+                    *ngIf="item.value.concluido === false"
+                    mat-mini-fab
+                    extended
+                    (click)="alterarStatusConcluido(i)"
+                    type="button"
+                    matTooltip="Concluir item"
+                  >
+                    <mat-icon>check_circle</mat-icon>
+                  </button>
+                  <button
+                    *ngIf="item.value.concluido === true"
+                    mat-mini-fab
+                    extended
+                    (click)="alterarStatusConcluido(i)"
+                    type="button"
+                    matTooltip="Cancelar conclusão do item"
+                  >
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+
+                  <button
+                    mat-mini-fab
+                    matTooltip="Remover item"
+                    color="secondary"
+                    (click)="removerItem(i)"
+                    type="button"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </section>
+
+        <div class="row justify-content-end g-2 gap-2 mt-5">
+          <button
+            mat-flat-button
+            type="submit"
+            class="col-sm-4"
+            color="primary"
+          >
+            <mat-icon>check</mat-icon>
+            Gravar
+          </button>
+          <a
+            mat-button
+            type="button"
+            class="col-sm-4"
+            routerLink="/tarefas/listar"
+          >
+            <mat-icon>keyboard_return</mat-icon>
+            Voltar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

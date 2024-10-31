@@ -66,7 +66,7 @@ export interface VisualizarCompromissoViewModel{
   local?: string;
   link?: string;
   data: Date;
-  horaIncio: string;
+  horaInicio: string;
   horaTermino: string;
   contato: ListarContatoViewModel;
 }
