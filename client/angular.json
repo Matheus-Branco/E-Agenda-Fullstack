@@ -140,6 +140,8 @@
         "cypress-open": {
           "builder": "@cypress/schematic:cypress",
           "options": {
+            "devServerTarget": "e-agenda:serve",
+            "browser": "chrome",
             "watch": true,
             "headless": false
           }
@@ -161,7 +163,6 @@
     }
   },
   "cli": {
-    "analytics": "68e7b047-52e4-4263-ba15-c9eb869a726e",
     "schematicCollections": ["@schematics/angular", "@cypress/schematic"]
   }
 }
