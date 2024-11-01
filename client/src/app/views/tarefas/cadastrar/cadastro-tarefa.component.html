@@ -69,6 +69,7 @@
 
           <button
             mat-stroked-button
+            data-cy="adicionarItem"
             extended
             (click)="adicionarItem(tituloItem.value); tituloItem.value = ''"
             type="button"
@@ -89,6 +90,7 @@
                 <div class="ms-auto">
                   <button
                     mat-mini-fab
+                    data-cy="removerItem"
                     (click)="removerItem(i)"
                     type="button"
                     matTooltip="Remover item"

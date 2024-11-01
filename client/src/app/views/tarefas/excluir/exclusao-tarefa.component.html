@@ -46,7 +46,7 @@
         <div class="row g-2">
           <mat-card
             appearance="outlined"
-            *ngFor="let item of detalhesTarefa?.itens;"
+            *ngFor="let item of detalhesTarefa?.itens"
           >
             <mat-card-content class="d-flex align-items-center">
               <p class="fs-5 m-0">{{ item.titulo }}</p>
@@ -67,6 +67,7 @@
       <div class="row justify-content-end g-2 gap-2 mt-3">
         <button
           mat-flat-button
+          data-cy="confirmarExclusao"
           type="button"
           class="col-sm-4"
           (click)="excluir()"
