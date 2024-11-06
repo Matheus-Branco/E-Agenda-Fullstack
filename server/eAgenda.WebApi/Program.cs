@@ -25,19 +25,17 @@ public class Program
 
         app.UseMiddleware<ManipuladorExcecoes>();
 
-        if (app.Environment.IsDevelopment())
+        app.UseSwagger();
+
+        app.UseSwaggerUI();
+
+        using var scope = app.Services.CreateScope();
+
+        var dbContext = scope.ServiceProvider.GetRequiredService<IContextoPersistencia>();
+
+        if(dbContext is EAgendaDbContext eAgendaDbContext)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-
-            using var scope = app.Services.CreateScope();
-
-            var dbContext = scope.ServiceProvider.GetRequiredService<IContextoPersistencia>();
-
-            if (dbContext is EAgendaDbContext eAgendaDbContext)
-            {
-                MigradorBancoDados.AtualizarBancoDados(eAgendaDbContext);
-            }
+            MigradorBancoDados.AtualizarBancoDados(eAgendaDbContext);
         }
 
         app.UseHttpsRedirection();

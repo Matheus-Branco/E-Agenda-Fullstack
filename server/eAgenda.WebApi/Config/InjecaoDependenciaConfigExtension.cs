@@ -21,11 +21,11 @@ namespace eAgenda.WebApi.Config
     {
         public static void ConfigurarInjecaoDependencia(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("SqlServer");
+            var connectionString = configuration.GetConnectionString("Default");
 
             services.AddDbContext<IContextoPersistencia, EAgendaDbContext>(optionsBuilder =>
             {
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder.UseNpgsql(connectionString);
             });
 
             services.AddTransient<ITenantProvider, ApiTenantProvider>();

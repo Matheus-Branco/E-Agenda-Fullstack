@@ -9,10 +9,9 @@
                  config.AddPolicy(nome, politica =>
                  {
                      politica
-                         .WithOrigins("http://localhost:4200") // Permite apenas a origem da aplicação Angular
                          .AllowAnyHeader()
                          .AllowAnyMethod()
-                         .AllowCredentials();
+                         .AllowAnyMethod();
                  });
              });
         }
